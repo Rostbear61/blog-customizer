@@ -125,65 +125,63 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 				isOpen={isOpen}
 				onClick={handleToggleForm}
 			/>
-			{isOpen && (
-				<aside
-					ref={rootRef}
-					className={clsx(styles.container, styles.container_open)}>
-					<form className={styles.form} onSubmit={handleSubmit}>
-						<h1 className={styles.title}>задайте параметры</h1>
-						<div className={styles.marginBottom}>
-							<Select
-								title='Шрифт'
-								options={fontFamilyOptions}
-								selected={selectedFont}
-								onChange={handleFontChange}
-							/>
-						</div>
-						<div className={styles.marginBottom}>
-							<RadioGroup
-								name='fontSize'
-								options={fontSizeOptions}
-								selected={selectedFontSize}
-								onChange={handleFontSizeChange}
-								title='Размер шрифта'
-							/>
-						</div>
-						<div className={styles.marginBottomDouble}>
-							<Select
-								title='Цвет Шрифта'
-								options={fontColors}
-								selected={selectedFontColor}
-								onChange={handleFontColorChange}
-							/>
-						</div>
-						<div className={styles.marginBottom}>
-							<Select
-								title='Цвет Фона'
-								options={backgroundColors}
-								selected={selectedBackgroundColor}
-								onChange={handleBackgroundColorChange}
-							/>
-						</div>
-						<div className={styles.marginBottom}>
-							<Select
-								title='Ширина Контента'
-								options={contentWidthArr}
-								selected={selectedContentWidth}
-								onChange={handleContentWidthChange}
-							/>
-						</div>
-						<div className={styles.bottomContainer}>
-							<Button
-								title='Сбросить'
-								htmlType='reset'
-								type='clear'
-								onClick={handleReset}
-							/>
-							<Button title='Применить' htmlType='submit' type='apply' />
-						</div>
-					</form>
-				</aside>
-			)}
+			<aside
+				ref={rootRef}
+				className={clsx(styles.container, isOpen ? styles.container_open : '')}>
+				<form className={styles.form} onSubmit={handleSubmit}>
+					<h1 className={styles.title}>задайте параметры</h1>
+					<div className={styles.marginBottom}>
+						<Select
+							title='Шрифт'
+							options={fontFamilyOptions}
+							selected={selectedFont}
+							onChange={handleFontChange}
+						/>
+					</div>
+					<div className={styles.marginBottom}>
+						<RadioGroup
+							name='fontSize'
+							options={fontSizeOptions}
+							selected={selectedFontSize}
+							onChange={handleFontSizeChange}
+							title='Размер шрифта'
+						/>
+					</div>
+					<div className={styles.marginBottomDouble}>
+						<Select
+							title='Цвет Шрифта'
+							options={fontColors}
+							selected={selectedFontColor}
+							onChange={handleFontColorChange}
+						/>
+					</div>
+					<div className={styles.marginBottom}>
+						<Select
+							title='Цвет Фона'
+							options={backgroundColors}
+							selected={selectedBackgroundColor}
+							onChange={handleBackgroundColorChange}
+						/>
+					</div>
+					<div className={styles.marginBottom}>
+						<Select
+							title='Ширина Контента'
+							options={contentWidthArr}
+							selected={selectedContentWidth}
+							onChange={handleContentWidthChange}
+						/>
+					</div>
+					<div className={styles.bottomContainer}>
+						<Button
+							title='Сбросить'
+							htmlType='reset'
+							type='clear'
+							onClick={handleReset}
+						/>
+						<Button title='Применить' htmlType='submit' type='apply' />
+					</div>
+				</form>
+			</aside>
 		</>
 	);
 };

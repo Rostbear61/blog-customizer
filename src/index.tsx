@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import { StrictMode, CSSProperties, useState } from 'react';
-import clsx from 'clsx';
 import { Article } from './components/article/Article';
 import {
 	ArticleParamsForm,
@@ -14,17 +13,12 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
-	const [articleParams, setArticleParams] = useState<DefaultValues>({
-		fontFamilyOption: defaultArticleState.fontFamilyOption,
-		fontSizeOption: defaultArticleState.fontSizeOption,
-		fontColor: defaultArticleState.fontColor,
-		backgroundColor: defaultArticleState.backgroundColor,
-		contentWidth: defaultArticleState.contentWidth,
-	});
+	const [articleParams, setArticleParams] =
+		useState<DefaultValues>(defaultArticleState);
 
 	return (
 		<main
-			className={clsx(styles.main)}
+			className={styles.main}
 			style={
 				{
 					'--font-family': articleParams.fontFamilyOption.value,
@@ -35,7 +29,7 @@ const App = () => {
 				} as CSSProperties
 			}>
 			<ArticleParamsForm
-				defaultValues={articleParams}
+				defaultValues={defaultArticleState}
 				onApply={setArticleParams}
 			/>
 			<Article
