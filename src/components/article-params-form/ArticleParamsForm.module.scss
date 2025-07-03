@@ -3,13 +3,25 @@
 	left: 0;
 	width: 616px;
 	height: 100%;
-	overflow: scroll;
+	overflow: auto;
 	transform: translate(-616px);
 	transition: transform 0.5s ease;
 }
 
+.title {
+	width: 100%;
+	margin-bottom: 50px;
+	color: #000000;
+	font-weight: 800;
+	font-size: 31px;
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
 .container_open {
 	transform: translate(0);
+	transition: transform 0.5s ease;
 }
 
 .form {
@@ -29,4 +41,12 @@
 	display: flex;
 	justify-content: space-between;
 	margin-top: auto;
+}
+
+.marginBottom {
+	margin-bottom: 50px;
+}
+
+.marginBottomDouble {
+	margin-bottom: 100px;
 }

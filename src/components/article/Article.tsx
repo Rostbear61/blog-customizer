@@ -6,9 +6,31 @@ import { Text } from 'src/ui/text';
 
 import styles from './Article.module.scss';
 
-export const Article = () => {
+interface ArticleProps {
+	fontFamily?: string;
+	fontSize?: string;
+	fontColor?: string;
+	backgroundColor?: string;
+	contentWidth?: string;
+}
+
+export const Article = ({
+	fontFamily,
+	fontSize,
+	fontColor,
+	backgroundColor,
+	contentWidth,
+}: ArticleProps) => {
 	return (
-		<article className={clsx(styles.article)}>
+		<article
+			className={clsx(styles.article)}
+			style={{
+				fontFamily,
+				fontSize,
+				color: fontColor,
+				backgroundColor,
+				maxWidth: contentWidth,
+			}}>
 			<Text as='h1' size={45} weight={800} uppercase dynamicLite>
 				Портрет Западной Швейцарии
 			</Text>
