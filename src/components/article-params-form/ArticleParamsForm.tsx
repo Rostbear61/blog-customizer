@@ -9,75 +9,45 @@ import {
 	fontColors,
 	backgroundColors,
 	contentWidthArr,
+	ArticleStateType,
 } from 'src/constants/articleProps';
 import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 import styles from './ArticleParamsForm.module.scss';
 import { useState, useRef } from 'react';
 import { RadioGroup } from 'src/ui/radio-group';
 
-export interface DefaultValues {
-	fontFamilyOption: OptionType;
-	fontColor: OptionType;
-	backgroundColor: OptionType;
-	contentWidth: OptionType;
-	fontSizeOption: OptionType;
-}
 interface ArticleParamsFormProps {
-	defaultValues?: DefaultValues;
-	onApply?: (params: DefaultValues) => void;
+	defaultValues: ArticleStateType;
+	onApply?: (params: ArticleStateType) => void;
 }
 
 export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 	defaultValues,
 	onApply,
 }) => {
-	const {
-		fontFamilyOption,
-		fontColor,
-		backgroundColor,
-		contentWidth,
-		fontSizeOption,
-	} = defaultValues || {
-		fontFamilyOption: fontFamilyOptions[0],
-		fontColor: fontColors[0],
-		backgroundColor: backgroundColors[0],
-		contentWidth: contentWidthArr[0],
-		fontSizeOption: fontSizeOptions[0],
-	};
-	const [initialValues] = useState<DefaultValues>({
-		fontFamilyOption: fontFamilyOptions[0],
-		fontColor: fontColors[0],
-		backgroundColor: backgroundColors[0],
-		contentWidth: contentWidthArr[0],
-		fontSizeOption: fontSizeOptions[0],
-	});
-	const [initialValuesState] = useState<DefaultValues>(initialValues);
-
 	const [isOpen, setIsOpen] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
-	const arrowButtonRef = useRef<HTMLDivElement>(null);
 	useOutsideClickClose({
 		isOpen,
 		rootRef,
 		onChange: setIsOpen,
 		onClose: () => setIsOpen(false),
-		ignoreRef: arrowButtonRef,
 	});
 
-	const handleToggleForm = () => {
-		setIsOpen((prev) => !prev);
-	};
-
-	const [selectedFont, setSelectedFont] =
-		useState<OptionType>(fontFamilyOption);
-	const [selectedFontSize, setSelectedFontSize] =
-		useState<OptionType>(fontSizeOption);
-	const [selectedFontColor, setSelectedFontColor] =
-		useState<OptionType>(fontColor);
+	const [selectedFont, setSelectedFont] = useState<OptionType>(
+		defaultValues.fontFamilyOption
+	);
+	const [selectedFontSize, setSelectedFontSize] = useState<OptionType>(
+		defaultValues.fontSizeOption
+	);
+	const [selectedFontColor, setSelectedFontColor] = useState<OptionType>(
+		defaultValues.fontColor
+	);
 	const [selectedBackgroundColor, setSelectedBackgroundColor] =
-		useState<OptionType>(backgroundColor);
-	const [selectedContentWidth, setSelectedContentWidth] =
-		useState<OptionType>(contentWidth);
+		useState<OptionType>(defaultValues.backgroundColor);
+	const [selectedContentWidth, setSelectedContentWidth] = useState<OptionType>(
+		defaultValues.contentWidth
+	);
 
 	const handleFontChange = (option: OptionType) => {
 		setSelectedFont(option);
@@ -108,23 +78,19 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 	};
 
 	const handleReset = () => {
-		setSelectedFont(initialValuesState.fontFamilyOption);
-		setSelectedFontColor(initialValuesState.fontColor);
-		setSelectedBackgroundColor(initialValuesState.backgroundColor);
-		setSelectedContentWidth(initialValuesState.contentWidth);
-		setSelectedFontSize(initialValuesState.fontSizeOption);
+		setSelectedFont(defaultValues.fontFamilyOption);
+		setSelectedFontColor(defaultValues.fontColor);
+		setSelectedBackgroundColor(defaultValues.backgroundColor);
+		setSelectedContentWidth(defaultValues.contentWidth);
+		setSelectedFontSize(defaultValues.fontSizeOption);
 
 		if (onApply) {
-			onApply({ ...initialValuesState });
+			onApply({ ...defaultValues });
 		}
 	};
 	return (
 		<>
-			<ArrowButton
-				ref={arrowButtonRef}
-				isOpen={isOpen}
-				onClick={handleToggleForm}
-			/>
+			<ArrowButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
 			<aside
 				ref={rootRef}
 				className={clsx(styles.container, isOpen ? styles.container_open : '')}>

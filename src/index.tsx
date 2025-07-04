@@ -1,11 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import { StrictMode, CSSProperties, useState } from 'react';
 import { Article } from './components/article/Article';
+import { ArticleParamsForm } from './components/article-params-form/ArticleParamsForm';
 import {
-	ArticleParamsForm,
-	DefaultValues,
-} from './components/article-params-form/ArticleParamsForm';
-import { defaultArticleState } from './constants/articleProps';
+	defaultArticleState,
+	ArticleStateType,
+} from './constants/articleProps';
 import './styles/index.scss';
 import styles from './styles/index.module.scss';
 
@@ -14,7 +14,7 @@ const root = createRoot(domNode);
 
 const App = () => {
 	const [articleParams, setArticleParams] =
-		useState<DefaultValues>(defaultArticleState);
+		useState<ArticleStateType>(defaultArticleState);
 
 	return (
 		<main
@@ -32,13 +32,7 @@ const App = () => {
 				defaultValues={defaultArticleState}
 				onApply={setArticleParams}
 			/>
-			<Article
-				fontFamily={articleParams.fontFamilyOption.value}
-				fontSize={articleParams.fontSizeOption.value}
-				fontColor={articleParams.fontColor.value}
-				backgroundColor={articleParams.backgroundColor.value}
-				contentWidth={articleParams.contentWidth.value}
-			/>
+			<Article />
 		</main>
 	);
 };
