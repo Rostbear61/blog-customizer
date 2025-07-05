@@ -34,56 +34,31 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 		onClose: () => setIsOpen(false),
 	});
 
-	const [selectedFont, setSelectedFont] = useState<OptionType>(
-		defaultValues.fontFamilyOption
-	);
-	const [selectedFontSize, setSelectedFontSize] = useState<OptionType>(
-		defaultValues.fontSizeOption
-	);
-	const [selectedFontColor, setSelectedFontColor] = useState<OptionType>(
-		defaultValues.fontColor
-	);
-	const [selectedBackgroundColor, setSelectedBackgroundColor] =
-		useState<OptionType>(defaultValues.backgroundColor);
-	const [selectedContentWidth, setSelectedContentWidth] = useState<OptionType>(
-		defaultValues.contentWidth
-	);
+	const [formState, setFormState] = useState<ArticleStateType>({
+		fontFamilyOption: defaultValues.fontFamilyOption,
+		fontSizeOption: defaultValues.fontSizeOption,
+		fontColor: defaultValues.fontColor,
+		backgroundColor: defaultValues.backgroundColor,
+		contentWidth: defaultValues.contentWidth,
+	});
 
-	const handleFontChange = (option: OptionType) => {
-		setSelectedFont(option);
+	const handleOnChange = (field: keyof ArticleStateType) => {
+		return (value: OptionType) => {
+			setFormState((prevState) => ({ ...prevState, [field]: value }));
+		};
 	};
-	const handleFontSizeChange = (option: OptionType) => {
-		setSelectedFontSize(option);
-	};
-	const handleFontColorChange = (option: OptionType) => {
-		setSelectedFontColor(option);
-	};
-	const handleBackgroundColorChange = (option: OptionType) => {
-		setSelectedBackgroundColor(option);
-	};
-	const handleContentWidthChange = (option: OptionType) => {
-		setSelectedContentWidth(option);
-	};
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (onApply) {
 			onApply({
-				fontFamilyOption: selectedFont,
-				fontColor: selectedFontColor,
-				backgroundColor: selectedBackgroundColor,
-				contentWidth: selectedContentWidth,
-				fontSizeOption: selectedFontSize,
+				...formState,
 			});
 		}
 	};
 
 	const handleReset = () => {
-		setSelectedFont(defaultValues.fontFamilyOption);
-		setSelectedFontColor(defaultValues.fontColor);
-		setSelectedBackgroundColor(defaultValues.backgroundColor);
-		setSelectedContentWidth(defaultValues.contentWidth);
-		setSelectedFontSize(defaultValues.fontSizeOption);
-
+		setFormState(defaultValues);
 		if (onApply) {
 			onApply({ ...defaultValues });
 		}
@@ -100,16 +75,16 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 						<Select
 							title='Шрифт'
 							options={fontFamilyOptions}
-							selected={selectedFont}
-							onChange={handleFontChange}
+							selected={formState.fontFamilyOption}
+							onChange={handleOnChange('fontFamilyOption')}
 						/>
 					</div>
 					<div className={styles.marginBottom}>
 						<RadioGroup
 							name='fontSize'
 							options={fontSizeOptions}
-							selected={selectedFontSize}
-							onChange={handleFontSizeChange}
+							selected={formState.fontSizeOption}
+							onChange={handleOnChange('fontSizeOption')}
 							title='Размер шрифта'
 						/>
 					</div>
@@ -117,24 +92,24 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 						<Select
 							title='Цвет Шрифта'
 							options={fontColors}
-							selected={selectedFontColor}
-							onChange={handleFontColorChange}
+							selected={formState.fontColor}
+							onChange={handleOnChange('fontColor')}
 						/>
 					</div>
 					<div className={styles.marginBottom}>
 						<Select
 							title='Цвет Фона'
 							options={backgroundColors}
-							selected={selectedBackgroundColor}
-							onChange={handleBackgroundColorChange}
+							selected={formState.backgroundColor}
+							onChange={handleOnChange('backgroundColor')}
 						/>
 					</div>
 					<div className={styles.marginBottom}>
 						<Select
 							title='Ширина Контента'
 							options={contentWidthArr}
-							selected={selectedContentWidth}
-							onChange={handleContentWidthChange}
+							selected={formState.contentWidth}
+							onChange={handleOnChange('contentWidth')}
 						/>
 					</div>
 					<div className={styles.bottomContainer}>
